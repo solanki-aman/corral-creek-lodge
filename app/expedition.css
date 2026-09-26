@@ -494,3 +494,4 @@ html[data-motion=off] .tm-badge,html[data-motion=off] .lm-river{animation:none}
 .km-drag{display:none}
 @media(max-width:1000px){.km-drag{display:block;margin:10px 0 0;font:700 18px var(--hand);color:#f2c56b;text-align:center}.tm-weather{top:auto;bottom:14px}}
 .km-scroll:focus-visible{outline:3px solid #f2c56b;outline-offset:3px}
+.km-attr{margin:10px 0 0;font-size:11px;opacity:.7;text-align:right}.km-attr a{text-decoration:underline}

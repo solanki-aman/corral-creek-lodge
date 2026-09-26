@@ -97,6 +97,7 @@ export default function ValleyLedger({data,failed}:{data:LocalData|null;failed:b
      <span className="km-pin-dot" aria-hidden="true">{p.id==='lodge'?<LogoMark/>:p.icon}</span><span className="km-pin-label">{p.label}</span></button>})}
    </div></div>
    <p className="km-drag" aria-hidden="true">Drag the map ↔</p>
+   <p className="km-attr">Illustration traced from map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.</p>
    <div className="km-card" aria-live="polite" key={sel}><Card place={current.id} data={data} failed={failed}/></div>
   </div>
  </section>
