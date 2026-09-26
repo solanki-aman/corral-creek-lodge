@@ -357,13 +357,13 @@ html[data-motion=on] .tm-title h1 em{animation:tm-scrawl 1.1s var(--ease) both .
 .il-count dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
 .il-count dd{margin:0;font:700 54px/1 var(--condensed)}
 @supports (animation-timeline:view()){
- html[data-motion=on] .il{height:320svh;view-timeline-name:--il}
+ html[data-motion=on] .il{height:420svh;view-timeline-name:--il}
  html[data-motion=on] .il-pin{position:sticky;top:0;height:100svh;min-height:0;justify-content:center;align-items:center;text-align:center;padding:0 6%}
- html[data-motion=on] .il-frame{animation:il-open linear both;animation-timeline:--il;animation-range:contain 0% contain 38%}
- html[data-motion=on] .il-frame img{animation:il-settle linear both;animation-timeline:--il;animation-range:contain 0% contain 45%}
- html[data-motion=on] .il-kicker{position:absolute;top:12svh;left:0;right:0;animation:il-fade linear both;animation-timeline:--il;animation-range:contain 20% contain 34%}
+ html[data-motion=on] .il-frame{animation:il-open linear both;animation-timeline:--il;animation-range:contain 0% contain 26%}
+ html[data-motion=on] .il-frame img{animation:il-settle linear both;animation-timeline:--il;animation-range:contain 0% contain 34%}
+ html[data-motion=on] .il-kicker{position:absolute;top:12svh;left:0;right:0;animation:il-fade linear both;animation-timeline:--il;animation-range:contain 44% contain 52%}
  html[data-motion=on] .il-lines{display:block;width:100%;height:40svh;margin:0}
- html[data-motion=on] .il-lines li{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;animation:il-line linear both;animation-timeline:--il;animation-range:contain calc(32% + var(--i)*18%) contain calc(52% + var(--i)*18%)}
+ html[data-motion=on] .il-lines li{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;animation:il-line linear both;animation-timeline:--il;animation-range:contain calc(48% + var(--i)*13%) contain calc(62% + var(--i)*13%)}
  html[data-motion=on] .il-lines li:last-child{animation-name:il-line-last}
  html[data-motion=on] .il-count{position:absolute;bottom:9svh;left:50%;translate:-50% 0;border:0;animation:il-count linear both;animation-timeline:--il;animation-range:contain 86% contain 98%}
 }
@@ -497,3 +497,23 @@ html[data-motion=off] .tm-badge,html[data-motion=off] .lm-river{animation:none}
 .km-attr{margin:10px 0 0;font-size:11px;opacity:.7;text-align:right}.km-attr a{text-decoration:underline}
 @media(min-width:1001px){.tm-title{max-width:min(760px,calc(100% - 500px))}.tm-title h1{font-size:clamp(56px,7vw,124px)}}
 .tm-title h1 em{line-height:1.05;margin-top:.1em;padding-bottom:.08em}
+/* The main welcome-arch photo is the big reveal right after the map */
+.il-porch{display:none}
+.il-welcome{position:relative;margin-bottom:22px}
+.il-welcome p{font:700 26px var(--hand);color:#f2c56b;margin:0}
+.il-welcome h2{font-family:var(--condensed);text-transform:uppercase;font-weight:700;font-size:clamp(44px,7vw,110px);line-height:.9;letter-spacing:-.01em;margin:0}
+.il-welcome h2 em{font-family:var(--serif);text-transform:none;font-weight:400;color:#f2c56b}
+.il-frame .il-main{object-position:50% 60%}
+@supports (animation-timeline:view()){
+ html[data-motion=on] .il-frame .il-porch{display:block;position:absolute;inset:0;opacity:0;animation:il-porch linear both;animation-timeline:--il;animation-range:contain 40% contain 50%}
+ html[data-motion=on] .il-welcome{position:absolute;left:5%;bottom:10svh;text-align:left;margin:0;animation:il-welcome linear both;animation-timeline:--il;animation-range:contain 18% contain 44%}
+ html[data-motion=on] .il-shade{animation:il-shade linear both;animation-timeline:--il;animation-range:contain 34% contain 48%}
+}
+@keyframes il-porch{to{opacity:1}}
+@keyframes il-welcome{0%{opacity:0;translate:0 50px}25%,70%{opacity:1;translate:0 0}100%{opacity:0;translate:0 -40px}}
+@keyframes il-shade{from{opacity:.35}to{opacity:1}}
+@media(max-width:700px){.il-frame .il-main{object-position:72% 60%}}
+/* Still panel: smaller type so the welcome photo stays the hero */
+.il-lines strong{font-size:clamp(28px,3.4vw,50px)}
+.il-lines{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px 32px}
+@supports (animation-timeline:view()){html[data-motion=on] .il-lines strong{font-size:clamp(40px,6vw,96px)}}
