@@ -17,7 +17,7 @@ Open the local address printed by the development server. Use `npm run build` fo
 
 - The home page opens on a treasure map drawn over the real drone photograph: an inked trail, an X on the lodge, and six field-note stops that pan the map. Toggle between map ink and true color.
 - A Corral Creek logo (peaks, a low sun and the Kern), used in the header, footer, favicon and a rotating badge. The map tour advances on its own with a progress ring and a Pause tour control.
-- Scroll-driven scenes (CSS `animation-timeline`): the map pushes in as you leave it, a pinned porch photo opens to full screen while three lines of a lodge day play, and room cards deal in. Browsers without support, and motion off, get still panels.
+- Scroll-driven scenes (CSS `animation-timeline`): the map pushes in as you leave it, a postcard of the welcome arch rises in, develops like an instant print, gets postmarked and flips to a handwritten note, and room cards deal in. Browsers without support, and motion off, get still panels.
 - The valley chapter is an illustrated map traced from OpenStreetMap data (river, Mountain Highway 99, Sierra Way and downtown streets) with an enlarged downtown inset, pins for food, events and outdoors, and a car that drives the route as you scroll.
 - Three more one-screen chapters: all four room types side by side with room counts, sizes and numbers; a tabbed valley ledger (food, live and annual events, outdoors); and a sideways guest register with every original review.
 - No scroll zoom or pinned scroll sequences. Native landmark buttons, a place-list alternative, reduced motion, and a saved motion preference.

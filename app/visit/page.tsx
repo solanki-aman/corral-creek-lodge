@@ -5,7 +5,7 @@ export default function Visit(){return <main id="main" className="inner-main"><s
  ['When are check-in and check-out?','The lodge’s published check-in time is 3 PM and check-out is 11 AM. Contact the lodge to discuss arrival arrangements.'],
  ['Can I bring my pet?','Pets are welcome in designated pet-friendly rooms. Pets must be leashed and may not be left unattended in the room. Confirm availability, fees, and current terms when reserving.'],
  ['Do the rooms have kitchens?','Rooms have kitchenettes. Confirm the equipment and layout of your exact room in the reservation system or with the lodge. Outdoor barbecue facilities are also available.'],
- ['How do I book or change a reservation?','Use Find your stay to open the live ResNexus reservation system. For an existing reservation, use your confirmation details or call the lodge for assistance.'],
+ ['How do I book or change a reservation?','Use Book now to open the live ResNexus reservation system. For an existing reservation, use your confirmation details or call the lodge for assistance.'],
  ['What about accessibility?','Please contact the lodge before booking to discuss the entrance, parking, stairs, bathroom, and room features you need. Specific physical accessibility details must be confirmed for your selected room.'],
  ['Is the river right outside?','The river is across the road from the lodge. Conditions vary; ask about suitable access and follow current local guidance.'],
  ['What are the cancellation terms?','Cancellation and deposit terms vary for standard, group, holiday, and special-event bookings. Read the lodge’s full policies and the terms shown for your reservation before paying.']
