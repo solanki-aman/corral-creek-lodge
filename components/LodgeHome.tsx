@@ -1,5 +1,12 @@
 'use client';
-import LodgeExperience from './LodgeExperience';
-import ValleyGuide,{useLocalData,ValleySignal} from './ValleyGuide';
+import {useEffect} from 'react';
+import TreasureMap from './TreasureMap';
+import RoomsBoard from './RoomsBoard';
+import ValleyLedger from './ValleyLedger';
 import Guestbook from './Guestbook';
-export default function LodgeHome(){const {data,failed}=useLocalData();return <><ValleySignal data={data}/><LodgeExperience/><ValleyGuide data={data} failed={failed}/><Guestbook/><section className="social-postscript"><div><p className="eyebrow">A POSTCARD IS NICE. KEEPING IN TOUCH IS BETTER.</p><h2>See you <em>up the river.</em></h2></div><a href="https://www.instagram.com/corralcreeklodge/" className="instagram-link">@corralcreeklodge<span>Follow the lodge on Instagram ↗</span></a><a className="social-photo-link" href="/gallery"><img src="/images/porch.jpg" alt="A quiet moment on the Corral Creek Lodge porch" loading="lazy"/><span>Lodge photo album ↗</span></a></section></>}
+import {useLocalData} from './ValleyGuide';
+
+export default function LodgeHome(){const {data,failed}=useLocalData();
+ // Chapters rise into place once, as they enter the viewport.
+ useEffect(()=>{const els=document.querySelectorAll('.home-chapter');if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('is-in'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{threshold:.12});els.forEach(e=>io.observe(e));return()=>io.disconnect()},[]);
+ return <><TreasureMap data={data}/><div className="home-chapter"><RoomsBoard/></div><div className="home-chapter"><ValleyLedger data={data} failed={failed}/></div><div className="home-chapter"><Guestbook/></div></>}

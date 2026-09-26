@@ -15,7 +15,8 @@ Open the local address printed by the development server. Use `npm run build` fo
 
 ## Experience
 
-- Compact photographic arrival, four room choices at a glance, and an interactive field-guide map derived from the actual drone photograph.
+- The home page opens on a treasure map drawn over the real drone photograph: an inked trail, an X on the lodge, and six field-note stops that pan the map. Toggle between map ink and true color.
+- Three more one-screen chapters: all four room types side by side with room counts, sizes and numbers; a tabbed valley ledger (food, live and annual events, outdoors); and a sideways guest register with every original review.
 - No scroll zoom or pinned scroll sequences. Native landmark buttons, a place-list alternative, reduced motion, and a saved motion preference.
 - Room index and detail pages, filterable destination guide, interactive Kernville field guide, keyboard-operable photo lightbox, FAQs, directions and contact links.
 - Booking buttons open a clearly labeled handoff to the **live** existing ResNexus system. No simulated prices or inventory. No test reservations have been made.
@@ -31,7 +32,7 @@ This is a preview, not a replacement for the current business site. Before produ
 
 ## Local content
 
-The `/api/local-info` endpoint retrieves NWS forecasts and upcoming public Kern Valley Events listings, with seven-second source timeouts, independent failure handling, and a 15-minute cache. Events use public HTML microdata because the published RSS feed is currently empty; source markup changes may require updating the parser. No external markup is rendered. The unreliable Facebook embed has been removed. Instagram’s public profile was verified, but no public post feed was available without an authorized integration, so the website links to the profile rather than presenting fake posts. The guestbook contains all 16 reviewer summaries (not full quotations), credited to their original platforms, with original-source links.
+The `/api/local-info` endpoint retrieves NWS forecasts and upcoming public Kern Valley Events listings, with seven-second source timeouts, independent failure handling, and a 15-minute cache. Events use public HTML microdata because the published RSS feed is currently empty; source markup changes may require updating the parser. No external markup is rendered. The unreliable Facebook embed has been removed. Instagram’s public profile was verified, but no public post feed was available without an authorized integration, so the website links to the profile rather than presenting fake posts. The guest register reproduces all 16 reviews from the original homepage word for word, credited to their platforms. Food, hours and event dates in `lib/valley.ts` were checked against each source on Sep 26, 2026; past annual events drop off automatically.
 
 ## Photography
 
