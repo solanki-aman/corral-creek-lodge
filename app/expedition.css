@@ -317,7 +317,7 @@ footer .brand .logo-mark{width:72px;height:72px}
 html[data-motion=on] .tm-letter{animation:tm-letter .9s var(--ease) both;animation-delay:calc(var(--n)*45ms + .25s)}
 html[data-motion=on] .tm-title h1 em{animation:tm-scrawl 1.1s var(--ease) both .95s}
 @keyframes tm-letter{from{opacity:0;transform:translateY(.45em) rotate(7deg)}}
-@keyframes tm-scrawl{from{opacity:0;clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -10% 0 0)}}
+@keyframes tm-scrawl{from{opacity:0;clip-path:inset(-30% 100% -40% -5%)}to{clip-path:inset(-30% -10% -40% -5%)}}
 
 /* The self-running tour: a progress ring fills around the current stop */
 @property --p{syntax:'<number>';inherits:false;initial-value:0}
@@ -496,3 +496,4 @@ html[data-motion=off] .tm-badge,html[data-motion=off] .lm-river{animation:none}
 .km-scroll:focus-visible{outline:3px solid #f2c56b;outline-offset:3px}
 .km-attr{margin:10px 0 0;font-size:11px;opacity:.7;text-align:right}.km-attr a{text-decoration:underline}
 @media(min-width:1001px){.tm-title{max-width:min(760px,calc(100% - 500px))}.tm-title h1{font-size:clamp(56px,7vw,124px)}}
+.tm-title h1 em{line-height:1.05;margin-top:.1em;padding-bottom:.08em}
