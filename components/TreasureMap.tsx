@@ -1,6 +1,7 @@
 'use client';
-import {useCallback,useEffect,useLayoutEffect,useRef,useState} from 'react';
+import {useCallback,useEffect,useLayoutEffect,useRef,useState,useSyncExternalStore} from 'react';
 import {BookButton} from './SiteChrome';
+import {LogoBadge} from './Logo';
 import type {LocalData} from './ValleyGuide';
 
 // Coordinates are in the drone photograph's own frame (aerial.jpg, 2000 × 1123 units).
@@ -15,16 +16,25 @@ const stops:Stop[]=[
  {id:'events',n:'5',label:'Happenings',image:'night',alt:'Corral Creek Lodge lit up at night',title:'Rodeos, festivals and Whiskey Flat Days.',copy:'The valley keeps a busy calendar. We pull the next few community events in live, and list the big ones ahead.',jump:{href:'#valley',label:'See what’s on',tab:'events'}}
 ];
 
+const TOUR_MS=5200;
+// Follows the site-wide motion setting (html[data-motion]), which honours prefers-reduced-motion.
+function subscribeMotion(cb:()=>void){const mo=new MutationObserver(cb);mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-motion']});return()=>mo.disconnect()}
+const motionOn=()=>document.documentElement.dataset.motion==='on';
+function Letters({text}:{text:string}){return <span className="tm-letters"><span className="sr-only">{text}</span>{[...text].map((c,i)=><span key={i} aria-hidden="true" style={{'--n':i} as React.CSSProperties}>{c===' '?'\u00a0':c}</span>)}</span>}
+
 export default function TreasureMap({data}:{data:LocalData|null}){
- const [active,setActive]=useState(0);const [ink,setInk]=useState(true);const [drawn,setDrawn]=useState(false);
+ const [active,setActive]=useState(0);const [ink,setInk]=useState(true);const [drawn,setDrawn]=useState(false);const [playing,setPlaying]=useState(true);const [hold,setHold]=useState(false);const [inView,setInView]=useState(true);
+ const moving=useSyncExternalStore(subscribeMotion,motionOn,()=>false);const touring=playing&&moving&&!hold&&inView;
  const stage=useRef<HTMLDivElement>(null);const canvas=useRef<HTMLDivElement>(null);
  const stop=stops[active];
  const place=useCallback(()=>{const s=stage.current,c=canvas.current;if(!s||!c)return;const sw=s.clientWidth,sh=s.clientHeight;const zoom=1.1;const cw=Math.max(sw,sh*W/H)*zoom,ch=cw*H/W;const target=stops.find((p,i)=>i===active&&p.x!==undefined)||stops[0];const wide=sw>900;const fx=wide?.55:.5,fy=wide?.4:.52;let tx=sw*fx-(target.x!/W)*cw,ty=sh*fy-(target.y!/H)*ch;tx=Math.min(0,Math.max(sw-cw,tx));ty=Math.min(0,Math.max(sh-ch,ty));c.style.width=`${cw}px`;c.style.height=`${ch}px`;c.style.transform=`translate3d(${tx}px,${ty}px,0)`},[active]);
  useLayoutEffect(()=>{place()},[place]);
  useEffect(()=>{addEventListener('resize',place);const t=setTimeout(()=>setDrawn(true),150);return()=>{removeEventListener('resize',place);clearTimeout(t)}},[place]);
  function go(i:number){setActive((i+stops.length)%stops.length)}
+ useEffect(()=>{if(!touring)return;const t=setTimeout(()=>setActive(a=>(a+1)%stops.length),TOUR_MS);return()=>clearTimeout(t)},[touring,active]);
+ useEffect(()=>{const el=stage.current;if(!el||!('IntersectionObserver' in window))return;const io=new IntersectionObserver(([e])=>setInView(e.isIntersecting&&e.intersectionRatio>.35),{threshold:[0,.35,.6]});io.observe(el);return()=>io.disconnect()},[]);
  function jump(tab?:string){if(tab)window.dispatchEvent(new CustomEvent('valley-tab',{detail:tab}))}
- return <section className={`tm ${drawn?'is-drawn':''} ${ink?'is-ink':'is-photo'}`} aria-labelledby="tm-title">
+ return <section className={`tm ${drawn?'is-drawn':''} ${ink?'is-ink':'is-photo'} ${touring?'is-touring':''}`} aria-labelledby="tm-title" style={{'--tour':`${TOUR_MS}ms`} as React.CSSProperties}>
   <div className="tm-stage" ref={stage}>
    <div className="tm-canvas" ref={canvas}>
     <img className="tm-photo" src="/images/aerial.jpg" alt="Drone photograph of Corral Creek Lodge: the red two-story lodge sits beside a mountain road, with the Kern River curving through the foreground." fetchPriority="high"/>
@@ -38,17 +48,17 @@ export default function TreasureMap({data}:{data:LocalData|null}){
     {stops.filter(p=>p.x!==undefined).map(p=>{const i=stops.indexOf(p);return <button key={p.id} tabIndex={-1} aria-hidden="true" className={`tm-pin ${p.id==='lodge'?'tm-pin-home':''} ${i===active?'is-on':''}`} style={{left:`${p.x!/W*100}%`,top:`${p.y!/H*100}%`}} onClick={()=>go(i)}><span>{p.n}</span><b>{p.label}</b></button>})}
    </div>
    <div className="tm-paper" aria-hidden="true"/>
-   <svg className="tm-compass" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="54"/><circle cx="60" cy="60" r="40"/><path d="M60 6 L68 60 L60 114 L52 60Z M6 60 L60 52 L114 60 L60 68Z"/><text x="60" y="64" textAnchor="middle">UP RIVER</text></svg>
+   <LogoBadge className="tm-badge"/>
   </div>
   <div className="tm-title">
    <p className="tm-kicker">Upper Kern River · Kernville, California</p>
-   <h1 id="tm-title">Corral Creek <em>Lodge</em></h1>
+   <h1 id="tm-title"><Letters text="Corral Creek"/> <em>Lodge</em></h1>
    <p className="tm-lede">A little lodge where the road meets the river. Twenty rooms, a BBQ deck and the Sequoia National Forest out back.</p>
    <div className="tm-actions"><BookButton className="button tm-book">Check dates &amp; rates <span aria-hidden="true">↗</span></BookButton><a href="#rooms" className="tm-link">See the rooms</a></div>
   </div>
-  <div className="tm-card" role="region" aria-label="Treasure map field notes">
-   <div className="tm-card-top"><p className="tm-kicker">Field notes · stop {active+1} of {stops.length}</p><button className="tm-toggle" aria-pressed={!ink} onClick={()=>setInk(v=>!v)}>{ink?'True color':'Map ink'}</button></div>
-   <ol className="tm-route">{stops.map((p,i)=><li key={p.id}><button onClick={()=>go(i)} aria-current={i===active?'step':undefined}><span aria-hidden="true">{p.n}</span><span className="tm-route-label">{p.label}</span></button></li>)}</ol>
+  <div className="tm-card" role="region" aria-label="Treasure map field notes" onMouseEnter={()=>setHold(true)} onMouseLeave={()=>setHold(false)} onFocus={()=>setHold(true)} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setHold(false)}}>
+   <div className="tm-card-top"><p className="tm-kicker">Field notes · stop {active+1} of {stops.length}</p><div className="tm-card-tools">{moving&&<button className="tm-toggle tm-play" aria-pressed={!playing} onClick={()=>setPlaying(v=>!v)}>{playing?<><span aria-hidden="true">❚❚</span> Pause tour</>:<><span aria-hidden="true">▶</span> Play tour</>}</button>}<button className="tm-toggle" aria-pressed={!ink} onClick={()=>setInk(v=>!v)}>{ink?'True color':'Map ink'}</button></div></div>
+   <ol className="tm-route">{stops.map((p,i)=><li key={p.id}><button onClick={()=>go(i)} aria-current={i===active?'step':undefined}><span aria-hidden="true" key={i===active?`on-${active}`:'off'}>{p.n}</span><span className="tm-route-label">{p.label}</span></button></li>)}</ol>
    <div className="tm-note" key={stop.id} aria-live="polite">
     {stop.image&&<img src={`/images/${stop.image}.jpg`} alt={stop.alt} loading="lazy"/>}
     {stop.image&&<p className="tm-edge">Beyond the edge of the map</p>}

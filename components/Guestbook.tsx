@@ -2,6 +2,7 @@
 import {useRef,useState} from 'react';
 import {guestbook} from '../lib/guestbook';
 import {social} from '../lib/valley';
+import SocialIcon from './SocialIcon';
 
 const sources=['All','Tripadvisor','Expedia','Google','Booking'] as const;
 export default function Guestbook(){
@@ -14,11 +15,11 @@ export default function Guestbook(){
    <div className="gb-tools"><div className="gb-filter" role="group" aria-label="Filter reviews by site">{sources.map(s=><button key={s} aria-pressed={source===s} onClick={()=>pick(s)}>{s}<span>{s==='All'?guestbook.length:guestbook.filter(r=>r.source===s).length}</span></button>)}</div>
    <div className="gb-arrows"><button onClick={()=>page(-1)} aria-label="Scroll reviews back">←</button><button onClick={()=>page(1)} aria-label="Scroll reviews forward">→</button></div></div></header>
   <p className="sr-only" role="status">{shown.length} reviews shown</p>
-  <ol className="gb-track" ref={track} tabIndex={0} aria-label="Guest reviews, scroll sideways">{shown.map((r,i)=><li key={r.name} className="gb-card" style={{'--tilt':`${((i*37)%5-2)*.45}deg`} as React.CSSProperties}>
+  <ol className="gb-track" ref={track} tabIndex={0} aria-label="Guest reviews, scroll sideways">{shown.map((r,i)=><li key={r.name} className="gb-card" style={{'--tilt':`${((i*37)%5-2)*.45}deg`,'--i':Math.min(i,4)} as React.CSSProperties}>
    <p className="gb-stamp"><span>{r.keepsake}</span></p>
    <figure><blockquote>{r.headline&&<p className="gb-headline">{r.headline}</p>}{r.text.map((p,j)=><p key={j}>{p}</p>)}</blockquote>
    <figcaption><strong>{r.name}</strong><span>{r.source}{r.rating?` · ${r.rating}`:''}</span>{r.detail&&<small>{r.detail}</small>}</figcaption></figure>
   </li>)}</ol>
-  <div className="gb-foot"><p>Stayed with us? Add your page to the register, or follow along for what’s happening up the river.</p><ul>{social.map(s=><li key={s.name}><a href={s.url}><b>{s.name}</b>{s.handle} <span aria-hidden="true">↗</span></a></li>)}</ul></div>
+  <div className="gb-foot"><p>Stayed with us? Add your page to the register, or follow along for what’s happening up the river.</p><ul>{social.map(s=><li key={s.name}><a href={s.url}><SocialIcon name={s.name}/><span><b>{s.name}</b>{s.handle}</span></a></li>)}</ul></div>
  </section>
 }
