@@ -1,0 +1,3 @@
+import Link from 'next/link';
+import {rooms} from '../lib/content';
+export default function RoomCards(){return <div className="room-grid">{rooms.map((room,i)=><Link className="room-card" href={`/stay/${room.slug}`} key={room.slug}><div className="room-photo"><img src={`/images/${room.image}.jpg`} alt={room.alt} loading="lazy"/><span className="image-label">0{i+1} / {room.beds.toUpperCase()}</span><span className="round-arrow" aria-hidden="true">↗</span></div><div className="room-heading"><h3>{room.name}</h3><span>{room.guests}</span></div><p>{room.label}</p><div className="room-tags"><span>Kitchenette</span><span>Wi-Fi</span><span>{room.pet}</span></div></Link>)}</div>}

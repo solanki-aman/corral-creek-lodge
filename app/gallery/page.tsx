@@ -1,0 +1,3 @@
+import Gallery from '../../components/Gallery';
+export const metadata={title:'A Look Around | Corral Creek Lodge',description:'Explore real photographs of Corral Creek Lodge, its rooms, outdoor spaces, and the Kern River setting.'};
+export default function GalleryPage(){return <main id="main" className="inner-main"><section className="page-intro section"><p className="eyebrow">POSTCARDS FROM CORRAL CREEK</p><h1>A little look<br/><em>around.</em></h1><p>The rooms, the gathering places, and the landscape that brings it all together. Photography from the lodge’s existing collection.</p></section><section className="section compact"><Gallery/></section></main>}
