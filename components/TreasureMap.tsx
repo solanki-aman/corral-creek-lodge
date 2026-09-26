@@ -20,7 +20,8 @@ const TOUR_MS=5200;
 // Follows the site-wide motion setting (html[data-motion]), which honours prefers-reduced-motion.
 function subscribeMotion(cb:()=>void){const mo=new MutationObserver(cb);mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-motion']});return()=>mo.disconnect()}
 const motionOn=()=>document.documentElement.dataset.motion==='on';
-function Letters({text}:{text:string}){return <span className="tm-letters"><span className="sr-only">{text}</span>{[...text].map((c,i)=><span key={i} aria-hidden="true" style={{'--n':i} as React.CSSProperties}>{c===' '?'\u00a0':c}</span>)}</span>}
+// Letters animate one by one, but each word stays in one unbreakable group so a line can only wrap between words.
+function Letters({text}:{text:string}){let n=0;return <span className="tm-letters"><span className="sr-only">{text}</span>{text.split(' ').map((w,wi)=><span key={wi} className="tm-word" aria-hidden="true">{wi>0&&' '}<span className="tm-word-inner">{[...w].map(c=><span key={n} className="tm-letter" style={{'--n':n++} as React.CSSProperties}>{c}</span>)}</span></span>)}</span>}
 
 export default function TreasureMap({data}:{data:LocalData|null}){
  const [active,setActive]=useState(0);const [ink,setInk]=useState(true);const [drawn,setDrawn]=useState(false);const [playing,setPlaying]=useState(true);const [hold,setHold]=useState(false);const [inView,setInView]=useState(true);
