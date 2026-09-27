@@ -5,7 +5,7 @@ import {amenities,roomTypes} from '../lib/valley';
 export default function RoomsBoard(){return <section className="rb" id="rooms" aria-labelledby="rb-title">
  <header className="rb-head"><p className="chapter-mark"><span>02</span>The rooms</p><h2 id="rb-title">Twenty keys. <em>Four ways to stay.</em></h2><p>Every room is a studio with its own fully stocked kitchenette, a short walk from the river. Designated rooms welcome dogs.</p></header>
  <ul className="rb-grid">{roomTypes.map((r,i)=><li key={r.slug} className="rb-card" style={{'--i':i} as React.CSSProperties}>
-  <div className="rb-photo"><img src={`/images/${r.image}.jpg`} alt={r.alt} loading="lazy"/>{r.pets&&<span className="rb-paw">Dogs welcome</span>}<span className="rb-keys">{r.rooms.length}<small> {r.rooms.length===1?"room":"rooms"}</small></span></div>
+  <div className="rb-photo"><img src={`/images/${r.image}.jpg`} alt={r.alt} loading="lazy"/>{r.pets&&<span className="rb-paw">Pets welcome</span>}<span className="rb-keys">{r.rooms.length}<small> {r.rooms.length===1?"room":"rooms"}</small></span></div>
   <div className="rb-body"><h3><Link href={`/stay/${r.slug}`}>{r.name}</Link></h3><p className="rb-line">{r.line}</p>
    <dl><div><dt>Beds</dt><dd>{r.bed}</dd></div><div><dt>Sleeps</dt><dd>{r.sleeps}</dd></div><div><dt>Size</dt><dd>{r.size}</dd></div></dl>
    <p className="rb-numbers"><span className="sr-only">Room numbers: </span>{r.rooms.map(n=><span key={n}>{n}</span>)}</p></div>

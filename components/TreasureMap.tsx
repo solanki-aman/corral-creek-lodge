@@ -8,7 +8,7 @@ import type {LocalData} from './ValleyGuide';
 const W=2000,H=1123;
 type Stop={id:string;n:string;label:string;title:string;copy:string;x?:number;y?:number;image?:string;alt?:string;jump?:{href:string;label:string;tab?:string};book?:boolean};
 const stops:Stop[]=[
- {id:'lodge',n:'X',label:'The lodge',x:935,y:492,title:'X marks the lodge.',copy:'Twenty rooms with kitchenettes, a BBQ deck and the mountains at your back. The treasure is a good night’s sleep.',book:true,jump:{href:'#rooms',label:'See all four room types'}},
+ {id:'lodge',n:'',label:'The lodge',x:935,y:492,title:'Here’s home base.',copy:'Twenty rooms with kitchenettes, a BBQ deck and the mountains at your back. The treasure is a good night’s sleep.',book:true,jump:{href:'#rooms',label:'See the rooms'}},
  {id:'river',n:'1',label:'The Kern',x:1120,y:965,title:'The river is across the road.',copy:'Upper Kern whitewater, a short walk from your door. Fishing stays open all year; rafting season starts in mid-March.',jump:{href:'#valley',label:'Get outside',tab:'outdoors'}},
  {id:'road',n:'2',label:'The road',x:1230,y:585,title:'Nine miles to town.',copy:'The road past the lodge leads to Kernville, about fifteen minutes away. Guests call it secluded, not far.',jump:{href:'#valley',label:'Where to eat in town',tab:'food'}},
  {id:'town',n:'3',label:'Kernville',image:'kernville',alt:'Western storefronts in downtown Kernville (archive photograph, 2007)',title:'Burgers, brews and a table by the rapids.',copy:'Cheryl’s Diner has fed the valley since 1985. Kern River Brewing is the town’s only brewpub. Ewings sits over the rapids.',jump:{href:'#valley',label:'Three local tables',tab:'food'}},
@@ -44,7 +44,7 @@ export default function TreasureMap({data}:{data:LocalData|null}){
      <g className="tm-contours">{[0,1,2,3,4].map(i=><ellipse key={i} cx="1080" cy="170" rx={160+i*120} ry={70+i*55}/>)}{[0,1,2].map(i=><ellipse key={`b${i}`} cx="1820" cy="330" rx={90+i*80} ry={50+i*40}/>)}</g>
      <g className="tm-grid">{[1,2,3,4,5].map(i=><line key={i} x1={i*W/6} x2={i*W/6} y1="0" y2={H}/>)}{[1,2,3].map(i=><line key={`h${i}`} y1={i*H/4} y2={i*H/4} x1="0" x2={W}/>)}</g>
      <path className="tm-trail" mask="url(#tm-reveal)" d="M1120 965 C 1060 900, 960 840, 1000 760 S 880 640, 935 500"/>
-     <g className="tm-x" transform="translate(935 492)"><path d="M-26 -26 L26 26 M26 -26 L-26 26"/></g>
+     <g className="tm-x" transform="translate(935 492)"><circle r="46"/></g>
     </svg>
     {stops.filter(p=>p.x!==undefined).map(p=>{const i=stops.indexOf(p);return <button key={p.id} tabIndex={-1} aria-hidden="true" className={`tm-pin ${p.id==='lodge'?'tm-pin-home':''} ${i===active?'is-on':''}`} style={{left:`${p.x!/W*100}%`,top:`${p.y!/H*100}%`}} onClick={()=>go(i)}><span>{p.n}</span><b>{p.label}</b></button>})}
    </div>
@@ -68,7 +68,6 @@ export default function TreasureMap({data}:{data:LocalData|null}){
    </div>
    <div className="tm-steps"><button onClick={()=>go(active-1)} aria-label="Previous stop">←</button><button className="tm-next" onClick={()=>go(active+1)}>Follow the trail <span aria-hidden="true">→</span></button></div>
   </div>
-  <a className="tm-weather" href="https://forecast.weather.gov/MapClick.php?lat=35.7547&lon=-118.4254">{data?.weather?<><b>{data.weather.temperature}°{data.weather.temperatureUnit}</b> {data.weather.shortForecast}<small>{data.weather.name} · NWS forecast</small></>:<>Kernville forecast<small>National Weather Service</small></>}</a>
   <nav className="tm-chapters" aria-label="On this page"><a href="#rooms"><span>02</span>Rooms</a><a href="#valley"><span>03</span>The valley</a><a href="#guestbook"><span>04</span>Guestbook</a></nav>
  </section>
 }

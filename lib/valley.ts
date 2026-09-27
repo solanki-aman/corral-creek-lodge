@@ -3,7 +3,7 @@ export const CHECKED='Sep 26, 2026';
 export const roomTypes=[
  {slug:'king-studio',name:'Comfort King',bed:'1 king',sleeps:2,size:'301 sq ft',rooms:['08','16','17','20','21','24'],pets:false,image:'king-clean',alt:'King bed and kitchenette in a Corral Creek Lodge room',line:'A little room for two.'},
  {slug:'double-queen-studio',name:'Double Queen Studio',bed:'2 queens',sleeps:4,size:'301 sq ft',rooms:['06','07','13','14','15','18','19','22','23'],pets:false,image:'queens-clean',alt:'Two queen beds in a Corral Creek Lodge studio',line:'Bring your favorite people.'},
- {slug:'pet-friendly-king',name:'Pet-Friendly King',bed:'1 king',sleeps:2,size:'291–301 sq ft',rooms:['04','05'],pets:true,image:'king',alt:'Representative king room interior at Corral Creek Lodge',line:'Your dog gets a getaway, too.'},
+ {slug:'pet-friendly-king',name:'Pet-Friendly King',bed:'1 king',sleeps:2,size:'291–301 sq ft',rooms:['04','05'],pets:true,image:'king',alt:'Representative king room interior at Corral Creek Lodge',line:'Your pet gets a getaway, too.'},
  {slug:'pet-friendly-double-queen',name:'Pet-Friendly Double Queen',bed:'2 queens',sleeps:4,size:'291 sq ft',rooms:['01','02','03'],pets:true,image:'queens',alt:'Representative double queen room interior at Corral Creek Lodge',line:'The whole pack, together.'}
 ];
 export const amenities=['Fully stocked kitchenette in every room','Free high-speed internet','DirecTV, 150+ HD channels','Propane BBQs and picnic deck','Self-serve laundry','Ice, snacks and soda on site'];
